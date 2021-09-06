@@ -4,7 +4,6 @@
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<link rel="stylesheet" href="css/bootswatched/bootstrap-swatched-darkly.min.css" />
-		<!-- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous"> -->
 		<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 		<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
 		
@@ -33,23 +32,26 @@
 
 			function generateWeek(weekDate) {
 				let currentWeek = document.createElement('div');
-				let currentDate = startDate = startOfWeek(weekDate);
-				//console.log('(just ensuring i can map the variable twice) the current date', currentDate);
+				let currentDate = startOfWeek(weekDate);
+				let theDate = new Date();
 				currentWeek.className = "row week";
 				for (let i = 0; i < 7; i++) {
 					let currentDay = document.createElement('div');
 					currentDay.className = "col day";
-					//currentDay.id = 'cd-' + currentDate.getMonth() + '-' + currenDate.getDay();
 					let span = document.createElement("span");
 					span.innerHTML = currentDate.getDate();
-					//add another day (which apparently has some bugs?)
 					//https://stackoverflow.com/questions/3818193/how-to-add-number-of-days-to-todays-date/20468397#20468397
-					currentDate = new Date(currentDate.getFullYear(), currentDate.getMonth(), currentDate.getDate() + 1);
-					//if ((weekDate.getDay() - 1) == i ) {
-					//    span.className =  " bold";
-					//}
+					
+                    if (theDate.getFullYear() === currentDate.getFullYear() &&
+                        theDate.getMonth() === currentDate.getMonth() &&
+                        theDate.getDate() === currentDate.getDate()
+                    ) {
+					    span.className =  " bold";
+					}
 					currentDay.append(span);
 					currentWeek.append(currentDay);
+					//increment the currentDate variable to the next day
+                    currentDate = new Date(currentDate.getFullYear(), currentDate.getMonth(), currentDate.getDate() + 1);
 				}
 
 				$('#' + calendaryId).append(currentWeek);
